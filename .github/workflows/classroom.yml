@@ -1,0 +1,110 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+checks: write
+actions: read
+contents: read
+jobs:
+    run-autograding-tests:
+        runs-on: ubuntu-latest
+        if: github.actor != 'github-classroom[bot]'
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Test 1. Creation
+              id: test-1-creation
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 1. Creation
+                setup-command: ''
+                command: make test-create
+                timeout: 10
+                max-score: 1
+            - name: Test 2. Push
+              id: test-2-push
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 2. Push
+                setup-command: ''
+                command: make test-push
+                timeout: 10
+                max-score: 1
+            - name: Test 3. Pop
+              id: test-3-pop
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 3. Pop
+                setup-command: ''
+                command: make test-pop
+                timeout: 10
+                max-score: 1
+            - name: Test 4. Add
+              id: test-4-add
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 4. Add
+                setup-command: ''
+                command: make test-add
+                timeout: 10
+                max-score: 1
+            - name: Test 5. Sub
+              id: test-5-sub
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 5. Sub
+                setup-command: ''
+                command: make test-sub
+                timeout: 10
+                max-score: 1
+            - name: Test 6. Mul
+              id: test-6-mul
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 6. Mul
+                setup-command: ''
+                command: make test-mul
+                timeout: 10
+                max-score: 1
+            - name: Test 7. Div
+              id: test-7-div
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 7. Div
+                setup-command: ''
+                command: make test-div
+                timeout: 10
+                max-score: 1
+            - name: Test 8. General case
+              id: test-8-general-case
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 8. General case
+                setup-command: ''
+                command: make test-general
+                timeout: 10
+                max-score: 2
+            - name: Test 9. Exceptions
+              id: test-9-exceptions
+              uses: classroom-resources/autograding-command-grader@v1
+              with:
+                test-name: Test 9. Exceptions
+                setup-command: ''
+                command: make test-empty
+                timeout: 10
+                max-score: 1
+            - name: Autograding Reporter
+              uses: classroom-resources/autograding-grading-reporter@v1
+              env:
+                TEST-1-CREATION_RESULTS: "${{steps.test-1-creation.outputs.result}}"
+                TEST-2-PUSH_RESULTS: "${{steps.test-2-push.outputs.result}}"
+                TEST-3-POP_RESULTS: "${{steps.test-3-pop.outputs.result}}"
+                TEST-4-ADD_RESULTS: "${{steps.test-4-add.outputs.result}}"
+                TEST-5-SUB_RESULTS: "${{steps.test-5-sub.outputs.result}}"
+                TEST-6-MUL_RESULTS: "${{steps.test-6-mul.outputs.result}}"
+                TEST-7-DIV_RESULTS: "${{steps.test-7-div.outputs.result}}"
+                TEST-8-GENERAL-CASE_RESULTS: "${{steps.test-8-general-case.outputs.result}}"
+                TEST-9-EXCEPTIONS_RESULTS: "${{steps.test-9-exceptions.outputs.result}}"
+              with:
+                runners: test-1-creation,test-2-push,test-3-pop,test-4-add,test-5-sub,test-6-mul,test-7-div,test-8-general-case,test-9-exceptions
