@@ -27,7 +27,7 @@ public class StackComputerTest {
     }
 
     @Test
-    public void testPush() {
+    public void testPush() throws StackException {
         comp.push(42);
         int[] stack = comp.getStack();
         assertEquals(42, stack[0]);
