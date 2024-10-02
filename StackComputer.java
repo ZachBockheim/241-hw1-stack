@@ -5,21 +5,28 @@ public class StackComputer {
     /**
      * Create a stack computer with a given maximum stack size
      */
+
+    public int[] stack;
+    public int top = 0;
+    public int maxsize;
+
     public StackComputer(int maxsize) {
+        stack = new int[maxsize];
+        maxsize = maxsize;
     }
 
     /**
      * Return the array of ints that represents the stack
      */
     public int[] getStack() {
-        return null;
+        return stack;
     }
 
     /**
      * Return the number of elements in the stack
      */
     public int size() {
-        return 0;
+        return top;
     }
 
     /**
@@ -27,6 +34,14 @@ public class StackComputer {
      * throw a StackException
      */
     public void push(int value) throws StackException {
+        if (top+1 == maxsize) {
+            throw new StackException("Stack is full");
+        }
+        else {
+            stack[top] = value;
+            top += 1;
+        }
+
     }
 
     /**
